@@ -5,6 +5,7 @@ export const salvarAntesSair2Guard: CanDeactivateFn<unknown> = (component, curre
   
   
     var val:any =component
+    const nextUrl=nextState
 
-  return val?.a? true : val?.confirm() 
+  return val.a ? true : val.confirm(nextUrl?.url) 
 };

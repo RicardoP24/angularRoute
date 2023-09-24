@@ -14,8 +14,8 @@ export class Pagina1Component  {
 
 }
 
-confirm(){
-  window.confirm('Guardar alterações?')
+confirm(nextUrl:string){
+  window.confirm(`Antes de ir para ${nextUrl}, Guardar alterações?`)
 }
 
 onInit(){
