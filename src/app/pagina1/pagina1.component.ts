@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRouteSnapshot, NavigationEnd, NavigationStart, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { AutorizarPathService } from '../autorizar-path.service';
+import { Observable, Subject, Subscription, debounceTime, distinctUntilChanged, of } from 'rxjs';
 
 @Component({
   selector: 'app-pagina1',
@@ -9,23 +9,63 @@ import { AutorizarPathService } from '../autorizar-path.service';
 })
 export class Pagina1Component  {
   a:boolean=false;
- constructor(private router: Router, private autorizar:AutorizarPathService) {
+  private variableChange$ = new Observable<boolean>();
+  private variableChangeSubscription!: Subscription;
+  myVariable: boolean = false;
+
+
+ constructor(private router: Router) {
 
 
 }
 
-confirm(nextUrl:string){
-  window.confirm(`Antes de ir para ${nextUrl}, Guardar alterações?`)
+
+ 
+  async confirm(nextUrl:string){
+
+// Subscribe to the Observable to react to variable changes
+  let valor=await this.waitForVariableChange()
+   return valor;
+ 
 }
 
-onInit(){
-  this.autorizar.a=false;
+onInit(){ 
+  // this.variableChange$ = of(false)
+
 }
  
 val:number=0;
 
+mudarValor(){
+  this.myVariable=true
+ // this.variableChange$ = of(true)
+
+}
+async waitForVariableChange(): Promise<void> {
+  return new Promise<void>((resolve) => { 
+
+    // this.variableChange$.subscribe((data)=>{
+    //   console.log(data)
+    //   resolve();
+
+    // })
+    const checkVariable = () => {
+      if (this.myVariable) {
+        resolve();
+
+       } else {
+        setTimeout(checkVariable, 100); // Check every 100 milliseconds
+      }
+    };
+
+    checkVariable();
+  });
+}
 concat(){
-  this.autorizar.a=!this.autorizar.a;
+  this.a=!this.a;
+  return ++this.val;
+}
+mudar(){
   this.a=!this.a;
   return ++this.val;
 }
