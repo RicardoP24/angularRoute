@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { Pagina2Component } from './pagina2/pagina2.component';
 import { Pagina1Component } from './pagina1/pagina1.component';
+import { TreeViewModule } from '@syncfusion/ej2-angular-navigations';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { Pagina1Component } from './pagina1/pagina1.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    TreeViewModule
   ],
   providers: [],
   bootstrap: [AppComponent]
